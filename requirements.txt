@@ -1,0 +1,13 @@
+jieba==0.42.1
+matplotlib==3.10.8
+mpl_chord_diagram==0.4.1
+networkx==3.6.1
+nltk==3.9.2
+numpy==2.3.5
+openai==2.13.0
+pandas==2.3.3
+rouge==1.0.1
+scikit_learn==1.8.0
+scipy==1.16.3
+seaborn==0.13.2
+tqdm==4.67.1
