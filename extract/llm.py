@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2025/6/19 
-# @Author  : LiXiang
+# @Author  : YinLuLu
 # @File    : llm.py
 # @Software: PyCharm
 
 import json
 import time
-
-import tqdm
-
 from api import *
 
 
@@ -158,6 +155,7 @@ def attributes_extract(texts, model_name):
         f.write("\n}")
 
 
+# 动词的属性抽取
 def category_extract(texts, model_name):
     model = {'deepseek_r1': deepseek_r1, 'deepseek_v3': deepseek_v3,
              'qwen_plus': qwen_plus, 'qwen3': qwen3,
@@ -222,20 +220,8 @@ def category_extract(texts, model_name):
         f.write("\n}")
 
 
-def relations_extract():
-    system_content_relation = '''
-# 指令
-您是科技文本分析专家，擅长识别和提取知识创造过程中的关键关系。请通读全文，理解其所描述的知识创造过程，并提取知识创造过程事件中的核心关系群组。
-提取要求：
-1. 仅提取与知识创造密切相关的关系，确保关系序列覆盖整个过程时间轴。忽略无关关系或不具知识创造主题意义的关系。
-2. 可直接抽取文本中显性的关系（如“测量”），也可基于语义合理推断隐性关系（如从“比较A与B差异”推得“对比”）
-'''
-
-
 if __name__ == '__main__':
     data_path = f"Y:\\Project\\PythonProject\\VerbLogic\\data\\"
-    for i in tqdm.tqdm(range(90*60)):
-        time.sleep(1)
     # model_list = ['deepseek_r1', 'deepseek_v3', 'qwen_plus', 'qwen3', 'doubao_16', 'doubao_15', 'glm4', 'glmz', "baichuan4", "baichuan3"]
     model_list = ["deepseek_r1", "deepseek_v3"]
     for model in model_list:

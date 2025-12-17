@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2025/6/8 
-# @Author  : LiXiang
-# @File    : F1.py
+# @Author  : YinLuLu
+# @File    : evaluation.py
 # @Software: PyCharm
 
 import re
@@ -26,8 +26,6 @@ plt.rcParams['axes.unicode_minus'] = False  # 正常显示负号
 
 
 def category_score(model_name):
-    # Step 1: Load raw content with preserved duplicates using regex
-
     with open(r"Y:\Project\PythonProject\VerbLogic\data\result\category\gold.txt", "r", encoding="utf-8") as f:
         content1 = f.read()
     with open(f"Y:\\Project\\PythonProject\\VerbLogic\\data\\result\\category\\{model_name}.txt",
@@ -38,7 +36,6 @@ def category_score(model_name):
         data_blocks = re.findall(r'"(data\d+)":\s*\{(.*?)\}(?=,\s*"data\d+":|\s*\})', content, re.DOTALL)
         parsed_data = {}
         for key, block in data_blocks:
-            # Handle duplicates by appending _1, _2, etc.
             items = re.findall(r'"(.*?)":"(.*?)"', block)
             counter = defaultdict(int)
             word_labels = {}
@@ -47,13 +44,10 @@ def category_score(model_name):
                 suffix = f"_{counter[word]}" if counter[word] > 1 else ""
                 word_labels[f"{word}{suffix}"] = label
             parsed_data[key] = word_labels
-        # print(parsed_data)
         return parsed_data
 
     data1 = parse_data(content1)
     data2 = parse_data(content2)
-
-    # Step 2: Compute Cohen Kappa for each data item
     kappas = []
     for i in range(1, 42):
         key = f"data{i}"
@@ -61,14 +55,12 @@ def category_score(model_name):
         d2 = data2.get(key, {})
         common_keys = sorted(set(d1.keys()) & set(d2.keys()))
         if not common_keys:
-            # kappas.append(None)
             continue
         y_true = [d1[k] for k in common_keys]
         y_pred = [d2[k] for k in common_keys]
         score = cohen_kappa_score(y_true, y_pred)
         kappas.append(score)
 
-    # Step 3: Global confusion matrix
     all_true = []
     all_pred = []
     for key in data1:
@@ -80,39 +72,24 @@ def category_score(model_name):
                 all_pred.append(d2[word])
     labels = ['知识规划类', "知识整合类", "资源获取类", "知识协作类", "知识重构类", "成果发布类", "成果影响类"]
     cm = confusion_matrix(all_true, all_pred, labels=labels)
-
-    # Step 4: Metrics
-    # print(all_true)
-    # print(all_pred)
     precision = precision_score(all_true, all_pred, labels=labels, average='weighted')
     recall = recall_score(all_true, all_pred, labels=labels, average='weighted')
     f1 = f1_score(all_true, all_pred, labels=labels, average='weighted')
     accuracy = accuracy_score(all_true, all_pred)
     print(f'\n{model_name}:')
-    # print(f'一致性：{np.average(kappas) * 100:.2f}%')
     print(f'A值: {accuracy * 100:.2f}%, P值: {precision * 100:.2f}%, R值: {recall * 100:.2f}%, F1: {f1 * 100:.2f}%')
 
-    # Step 5: Plot heatmap
     plt.figure(figsize=(7.5, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=labels, yticklabels=labels)
-    # plt.xlabel('yinlulu')
-    # plt.ylabel('lixiang')
-    # plt.title('7x7 Confusion Matrix Heatmap')
     plt.tight_layout()
     plt.savefig(f"{model_name}.png")
-    # plt.show()
 
 
 def verb_score(model_name):
     def compute_metrics(a, b):
-        # 多重集合统计
         counter_a = Counter(a)
         counter_b = Counter(b)
-
-        # 所有可能的实体标签（全集）
         all_entities = sorted(set(counter_a.keys()) | set(counter_b.keys()))
-
-        # 构造布尔标签向量，用于 Kappa 计算
         vec_a = []
         vec_b = []
         for entity in all_entities:
@@ -122,16 +99,12 @@ def verb_score(model_name):
             vec_b.extend([a] * counter_b[entity] + [0] * (count - counter_b[entity]))
 
         kappa = cohen_kappa_score(vec_a, vec_b)
-
-        # 计算 PRF (以 a 为 gold standard)
         tp = sum(min(counter_a[ent], counter_b[ent]) for ent in all_entities)
         fp = sum(counter_b[ent] - min(counter_a[ent], counter_b[ent]) for ent in all_entities)
         fn = sum(counter_a[ent] - min(counter_a[ent], counter_b[ent]) for ent in all_entities)
-
         precision = tp / (tp + fp) if (tp + fp) else 0.0
         recall = tp / (tp + fn) if (tp + fn) else 0.0
         f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
-
         return kappa, precision, recall, f1
 
     kappa_score = []
@@ -150,9 +123,6 @@ def verb_score(model_name):
         precision_score.append(precision)
         recall_score.append(recall)
         f1_score.append(f1)
-    # for i in range(len(kappa_score)):
-    #     print(f"第{i+1}篇:\t{kappa_score[i]*100:.2f}%")
-    # print('动词标注一致性平均值', average(kappa_score))
     print(f'{model_name}:')
     print(f'动词标注准确率: {np.average(precision_score) * 100:.2f}%', end='\t\t')
     print(f'动词标注召回率: {np.average(recall_score) * 100:.2f}%', end='\t\t')
@@ -160,27 +130,16 @@ def verb_score(model_name):
 
 
 def attr_score(model):
-    def is_value_match(a, b):
-        a_words = set(a)
-        b_words = set(b)
-        return len(a_words & b_words) > 0
-
     def parse_custom_json(filepath):
         with open(filepath, 'r', encoding='utf-8') as f:
             raw = f.read()
-
-        # Find all 'dataX' blocks using a more reliable regex split
         block_splits = re.split(r'"(data\d+)":\s*{', raw)[1:]  # drop content before first "dataX"
         parsed_data = {}
 
         for i in range(0, len(block_splits), 2):
             data_id = block_splits[i]
             content = block_splits[i + 1]
-
-            # Remove trailing brace that might belong to the enclosing object
             content = re.sub(r'}\s*$', '', content.strip())
-
-            # Match each verb block
             verb_matches = re.finditer(r'"(.*?)"\s*:\s*{(.*?)}(?=,\s*"(.*?)"\s*:\s*{|\s*}$)', content, re.DOTALL)
             verbs = defaultdict(list)
 
@@ -192,7 +151,6 @@ def attr_score(model):
                     attr_dict[attr] = val
                 verbs[verb].append(attr_dict)
 
-            # Final verb block (edge case not captured above)
             tail_match = re.findall(r'"(.*?)"\s*:\s*{(.*?)}\s*$', content.strip(), re.DOTALL)
             for verb, attr_block in tail_match:
                 attr_dict = {}
@@ -209,8 +167,8 @@ def attr_score(model):
             parsed_data[data_id] = numbered_verbs
         return parsed_data
 
-    data_a = parse_custom_json(r'Y:\Project\PythonProject\VerbLogic\data\extract\attr\gold.txt')
-    data_b = parse_custom_json(f'Y:\\Project\\PythonProject\\VerbLogic\\data\\extract\\attr\\{model}.txt')
+    data_a = parse_custom_json(r'Y:\Project\Python\VerbLogic\data\extract\attr\gold.txt')
+    data_b = parse_custom_json(f'Y:\\Project\\Python\\VerbLogic\\data\\extract\\attr\\{model}.txt')
 
     kappa_results = []
     precision_results = []
@@ -325,5 +283,4 @@ if __name__ == "__main__":
     model_list = ['baichuan3', 'baichuan4', 'glm4', 'glmz', 'deepseek_r1', 'deepseek_v3', 'doubao_15', 'doubao_16',
                   'qwen3', 'qwen_plus']
     for i in model_list:
-        category_score(i)
-    # category_score('deepseek_v3')
+        attr_score(i)

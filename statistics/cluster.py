@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2025/3/21 
-# @Author  : LiXiang
+# @Author  : YinLuLu
 # @File    : cluster.py
 # @Software: PyCharm
 
@@ -16,20 +16,20 @@ from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
 
 matplotlib.use('TkAgg')
-plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']  # 使用微软雅黑显示中文
-plt.rcParams['axes.unicode_minus'] = False  # 正常显示负号
+plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+plt.rcParams['axes.unicode_minus'] = False
 
 
 def hierarchical():
-    file_path = r"Y:\Project\PythonProject\VerbLogic\data\analysis\matrix.xlsx"  # 确保路径正确
+    file_path = r"Y:\Project\PythonProject\VerbLogic\data\analysis\matrix.xlsx"
     df = pd.read_excel(file_path, index_col=0)
-    cooccurrence_values = df.values  # 提取数值部分
+    cooccurrence_values = df.values
     min_val, max_val = np.min(cooccurrence_values), np.max(cooccurrence_values)
     distance_matrix = 1 - (cooccurrence_values - min_val) / (max_val - min_val)
     linkage_matrix = sch.linkage(distance_matrix, method='ward')
 
-    plt.rcParams['font.sans-serif'] = ['SimHei']  # 使用黑体显示中文
-    plt.rcParams['axes.unicode_minus'] = False  # 正常显示负号
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
     plt.figure(figsize=(12, 6))
     sch.dendrogram(linkage_matrix, labels=df.index.tolist(), leaf_rotation=90, leaf_font_size=10)
     plt.title("层次聚类树状图")
@@ -39,7 +39,6 @@ def hierarchical():
 
 
 def kmeans():
-
     def cwc():
         file_path = r"Y:\Project\PythonProject\VerbLogic\data\excel\动词类别转移概率.xlsx"
         df = pd.read_excel(file_path, index_col=0)
@@ -49,15 +48,15 @@ def kmeans():
         scaler = StandardScaler()
         scaled_data = scaler.fit_transform(distance_matrix)
         inertia_values = []
-        K_range = range(1, 10)  # 测试 1 到 10 个聚类
+        K_range = range(1, 10)
 
         for k in K_range:
             kmeans = KMeans(n_clusters=k, n_init=1000)
             kmeans.fit(scaled_data)
             inertia_values.append(kmeans.inertia_)
         #
-        plt.rcParams['font.sans-serif'] = ['SimHei']  # 使用黑体显示中文
-        plt.rcParams['axes.unicode_minus'] = False  # 正常显示负号
+        plt.rcParams['font.sans-serif'] = ['SimHei']
+        plt.rcParams['axes.unicode_minus'] = False
         plt.figure(figsize=(8, 4))
         plt.plot(K_range, inertia_values, marker="o", linestyle="--")
         plt.xlabel("聚类数")
@@ -76,7 +75,7 @@ def kmeans():
         best_score = -1
         silhouette_scores = []
 
-        K_range = range(2, 10)  # 选择 2 到 10 个聚类进行测试
+        K_range = range(2, 10)
         for k in K_range:
             kmeans = KMeans(n_clusters=k, n_init=1000)
             labels = kmeans.fit_predict(scaled_data)
@@ -87,12 +86,10 @@ def kmeans():
                 best_score = score
                 best_k = k
 
-        # 绘制 Silhouette Score 图
         plt.figure(figsize=(8, 4))
         plt.plot(K_range, silhouette_scores, marker="o", linestyle="--")
         plt.xlabel("聚类数 K")
         plt.ylabel("轮廓系数")
-        # plt.title("最佳 K 值选择（Silhouette Score）")
         plt.show()
 
     def k_c(best_k=3):

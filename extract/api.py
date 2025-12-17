@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2025/6/21 
-# @Author  : LiXiang
+# @Author  : YinLuLu
 # @File    : api.py
 # @Software: PyCharm
 
@@ -10,7 +10,7 @@ from openai import OpenAI
 
 def baichuan4(system_content, user_content):
     client = OpenAI(
-        api_key="sk-3652f7d1480a1233cf50f2c289cf40a1",
+        api_key="YOU_API_KEY",
         base_url="https://api.baichuan-ai.com/v1/",
     )
 
@@ -33,7 +33,7 @@ def baichuan4(system_content, user_content):
 
 def baichuan3(system_content, user_content):
     client = OpenAI(
-        api_key="sk-3652f7d1480a1233cf50f2c289cf40a1",
+        api_key="YOU_API_KEY",
         base_url="https://api.baichuan-ai.com/v1/",
     )
 
@@ -56,7 +56,7 @@ def baichuan3(system_content, user_content):
 
 def chatglm4(system_content, user_content):
     client = OpenAI(
-        api_key="d2c75957dcec44589c5ae9b1a1c5817c.yPynLdLChtsTNCM0",
+        api_key="YOU_API_KEY",
         base_url="https://open.bigmodel.cn/api/paas/v4/"
     )
 
@@ -84,7 +84,7 @@ def chatglm4(system_content, user_content):
 
 def chatglmz1(system_content, user_content):
     client = OpenAI(
-        api_key="d2c75957dcec44589c5ae9b1a1c5817c.yPynLdLChtsTNCM0",
+        api_key="YOU_API_KEY",
         base_url="https://open.bigmodel.cn/api/paas/v4/"
     )
 
@@ -113,7 +113,7 @@ def chatglmz1(system_content, user_content):
 def doubao_16(system_content, user_content):
     client = OpenAI(
         # 从环境变量中读取您的方舟API Key
-        api_key="dafcc4ce-6810-4161-b22e-cb243105ca5a",
+        api_key="YOU_API_KEY",
         base_url="https://ark.cn-beijing.volces.com/api/v3",
     )
     response = client.chat.completions.create(
@@ -143,8 +143,7 @@ def doubao_16(system_content, user_content):
 
 def doubao_15(system_content, user_content):
     client = OpenAI(
-        # 从环境变量中读取您的方舟API Key
-        api_key="dafcc4ce-6810-4161-b22e-cb243105ca5a",
+        api_key="YOU_API_KEY",
         base_url="https://ark.cn-beijing.volces.com/api/v3",
     )
     response = client.chat.completions.create(
@@ -174,7 +173,7 @@ def doubao_15(system_content, user_content):
 
 def deepseek_r1(system_content, user_content):
     client = OpenAI(
-        api_key="sk-ce23d310eef443b2be123fbe8db61807",
+        api_key="YOU_API_KEY",
         base_url="https://api.deepseek.com"
     )
 
@@ -202,7 +201,7 @@ def deepseek_r1(system_content, user_content):
 
 def deepseek_v3(system_content, user_content):
     client = OpenAI(
-        api_key="sk-ce23d310eef443b2be123fbe8db61807",
+        api_key="YOU_API_KEY",
         base_url="https://api.deepseek.com"
     )
 
@@ -222,7 +221,7 @@ def deepseek_v3(system_content, user_content):
 
 def qwen_plus(system_content, user_content):
     client = OpenAI(
-        api_key='sk-8180c63bbca8429f86b3b1fa6caa7ee5',
+        api_key="YOU_API_KEY",
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
     )
 
@@ -270,7 +269,7 @@ def qwen_plus(system_content, user_content):
 
 def qwen3(system_content, user_content):
     client = OpenAI(
-        api_key='sk-8180c63bbca8429f86b3b1fa6caa7ee5',
+        api_key="YOU_API_KEY",
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
     )
 
