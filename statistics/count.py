@@ -7,9 +7,12 @@
 
 import ast
 import re
+
+import json
 import seaborn as sns
 import matplotlib
 import numpy as np
+import json
 import pandas as pd
 import matplotlib.pyplot as plt
 from collections import defaultdict
@@ -19,70 +22,66 @@ plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
 plt.rcParams['axes.unicode_minus'] = False
 
 
-# def verb_count_pre():
-#     # 根据哈工大同义词典计算每个动词出现的次数
-#
-#     def load_cilin_dict():
-#         word_to_codes = {}
-#         code_to_words = {}
-#
-#         with open(r"Y:\Project\PythonProject\VerbLogic\data\analysis\sys_dict.txt", 'r', encoding='utf-8') as f:
-#             for line in f:
-#                 line = line.strip()
-#                 if not line or '@' in line:
-#                     continue  # 忽略弱关系
-#                 if '=' in line:
-#                     code, words_str = line.split('=')
-#                     words = words_str.strip().split()
-#                     code_to_words[code] = words
-#                     for word in words:
-#                         if word in word_to_codes:
-#                             word_to_codes[word].append(code)
-#                         else:
-#                             word_to_codes[word] = [code]
-#                 if '#' in line:
-#                     code, words_str = line.split('#')
-#                     words = words_str.strip().split()
-#                     code_to_words[code] = words
-#                     for word in words:
-#                         if word in word_to_codes:
-#                             word_to_codes[word].append(code)
-#                         else:
-#                             word_to_codes[word] = [code]
-#
-#         return word_to_codes, code_to_words
-#
-#     word_to_codes, code_to_words = load_cilin_dict()
-#     count_verb = dict()
-#     sys_verb = dict(dict())
-#     with open(r'Y:\Project\PythonProject\VerbLogic\data\extract\verbs\gold.txt', 'r', encoding='utf-8') as f:
-#         verbs = json.load(f)
-#     for data in verbs:
-#         for verb in verbs[data]:
-#             if verb in word_to_codes:
-#                 verb_s = code_to_words[word_to_codes[verb][0]][0]
-#             else:
-#                 verb_s = verb
-#             if verb_s in count_verb.keys():
-#                 count_verb[verb_s] += 1
-#             else:
-#                 count_verb[verb_s] = 1
-#             if verb_s in sys_verb.keys():
-#                 if verb in sys_verb[verb_s].keys():
-#                     sys_verb[verb_s][verb] += 1
-#                 else:
-#                     sys_verb[verb_s][verb] = 1
-#             else:
-#                 sys_verb[verb_s] = {verb: 1}
-#
-#     with open(r'Y:\Project\PythonProject\VerbLogic\data\analysis\verb_sys.txt', 'w', encoding='utf-8') as f:
-#         for key, value in sorted(count_verb.items(), key=lambda item: item[1], reverse=True):
-#             f.write(f"共出现{value}次:\t")
-#             for k, v in sorted(sys_verb[key].items(), key=lambda item: item[1], reverse=True):
-#                 f.write(f"{k}({v}次)、")
-#             f.write("\n")
-#
-#
+def verb_count_pre():
+    def load_cilin_dict():
+        word_to_codes = {}
+        code_to_words = {}
+
+        with open(r"Y:\Project\Python\VerbLogic\data\analysis\sys_dict.txt", 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line or '@' in line:
+                    continue
+                if '=' in line:
+                    code, words_str = line.split('=')
+                    words = words_str.strip().split()
+                    code_to_words[code] = words
+                    for word in words:
+                        if word in word_to_codes:
+                            word_to_codes[word].append(code)
+                        else:
+                            word_to_codes[word] = [code]
+                if '#' in line:
+                    code, words_str = line.split('#')
+                    words = words_str.strip().split()
+                    code_to_words[code] = words
+                    for word in words:
+                        if word in word_to_codes:
+                            word_to_codes[word].append(code)
+                        else:
+                            word_to_codes[word] = [code]
+
+        return word_to_codes, code_to_words
+
+    word_to_codes, code_to_words = load_cilin_dict()
+    count_verb = dict()
+    sys_verb = dict(dict())
+    with open(r'Y:\Project\Python\VerbLogic\data\result\gold\v.txt', 'r', encoding='utf-8') as f:
+        verbs = json.load(f)
+    for data in verbs:
+        for verb in verbs[data]:
+            if verb in word_to_codes:
+                verb_s = code_to_words[word_to_codes[verb][0]][0]
+            else:
+                verb_s = verb
+            if verb_s in count_verb.keys():
+                count_verb[verb_s] += 1
+            else:
+                count_verb[verb_s] = 1
+            if verb_s in sys_verb.keys():
+                if verb in sys_verb[verb_s].keys():
+                    sys_verb[verb_s][verb] += 1
+                else:
+                    sys_verb[verb_s][verb] = 1
+            else:
+                sys_verb[verb_s] = {verb: 1}
+
+    with open(r'Y:\Project\Python\VerbLogic\data\analysis\verb_sys.txt', 'w', encoding='utf-8') as f:
+        for key, value in sorted(count_verb.items(), key=lambda item: item[1], reverse=True):
+            f.write(f"共出现{value}次:\t")
+            for k, v in sorted(sys_verb[key].items(), key=lambda item: item[1], reverse=True):
+                f.write(f"{k}({v}次)、")
+            f.write("\n")
 
 
 def parse_data(content):
@@ -105,7 +104,6 @@ def verb_sys(path):
     with open(path, 'r', encoding='utf-8') as vf:
         for line in vf:
             n, v_list = line.strip().split()
-            # n = int(n[3:-2])
             v_list = [v[:2] for v in v_list.split('、') if v]
             for v in v_list:
                 v_dict[v] = v_list[0]
@@ -119,7 +117,7 @@ def category_count():
                       "成果发布类": 5, "成果影响类": 6}
     category_matrix = [[0 for _ in range(7)] for _ in range(7)]
 
-    with open(r'Y:\Project\PythonProject\VerbLogic\data\result\gold\c.txt', 'r', encoding='utf-8') as f:
+    with open(r'Y:\Project\Python\VerbLogic\data\result\gold\c.txt', 'r', encoding='utf-8') as f:
         c_content = f.read()
     c_content = parse_data(c_content)
 
@@ -132,42 +130,9 @@ def category_count():
         for j in range(len(c_v)):
             category_dict[str(category_index[c_v[j]])] += 1
 
-    # c = 7
-    # for i in range(c):
-    #     for j in range(c):
-    #         # category_matrix[i][j] = (category_matrix[i][j] + 0.1) / (category_dict[str(i)] + 0.1 * c)
-    #         category_matrix[i][j] = category_matrix[i][j] / category_dict[str(i)]
-
-    print(category_matrix)
     df = pd.DataFrame(category_matrix, index=list(category_index.keys()), columns=list(category_index.keys()))
-    df.to_excel(r"Y:\Project\PythonProject\VerbLogic\data\excel\阶段转移频次.xlsx", index=True)
+    df.to_excel(r"Y:\Project\Python\VerbLogic\data\excel\阶段转移频次.xlsx", index=True)
 
-    #     for key, value in category.items():
-    #         category_dict[value] += 1
-    #         if value == "知识规划类":
-    #             zsgh[verb_dict[key]] = zsgh.get(verb_dict[key], 0) + 1
-    #         elif value == "知识整合类":
-    #             zszh[verb_dict[key]] = zszh.get(verb_dict[key], 0) + 1
-    #         elif value == "资源获取类":
-    #             zyhq[verb_dict[key]] = zyhq.get(verb_dict[key], 0) + 1
-    #         elif value == "知识协作类":
-    #             zsxz[verb_dict[key]] = zsxz.get(verb_dict[key], 0) + 1
-    #         elif value == "知识重构类":
-    #             zscg[verb_dict[key]] = zscg.get(verb_dict[key], 0) + 1
-    #         elif value == "成果发布类":
-    #             cgfb[verb_dict[key]] = cgfb.get(verb_dict[key], 0) + 1
-    #         elif value == "成果影响类":
-    #             cgyx[verb_dict[key]] = cgyx.get(verb_dict[key], 0) + 1
-    # for c in [zsgh, zszh, zyhq, zsxz, zscg, cgfb, cgyx]:
-    #     print('-------------------------------------')
-    #     i = 0
-    #     for k, v in sorted(c.items(), key=lambda item: item[1], reverse=True):
-    #         i += 1
-    #         print(f'{k}({v / sum(c.values()) * 100:.2f}次)、', end='')
-    #         if i == 5:
-    #             break
-    #     print()
-    #
     categories = ["知识规划", "知识整合", "资源获取", "知识协作", "知识重构", "成果发布", "成果影响"]
     category_matrix = np.array(category_matrix, dtype=float)
 
@@ -188,8 +153,8 @@ def category_count():
     plt.xlabel("转移到的类别", fontsize=12)
     plt.ylabel("起始类别", fontsize=12)
     plt.tight_layout()
-    # plt.show()
-    plt.savefig(r"Y:\Project\PythonProject\VerbLogic\data\figure\阶段转移热力图.svg", bbox_inches='tight', dpi=2000)
+    plt.show()
+    # plt.savefig(r"Y:\Project\Python\VerbLogic\data\figure\阶段转移热力图.svg", bbox_inches='tight', dpi=2000)
     print(category_dict)
 
 
@@ -235,33 +200,35 @@ def cate_attr_count():
                         category_stats[verb_class][attr] += 1
         return {cls: dict(attrs) for cls, attrs in category_stats.items()}
 
-    with open(r'Y:\Project\PythonProject\VerbLogic\data\extract\gold\a.txt', 'r', encoding='utf-8') as f:
+    with open(r'Y:\Project\Python\VerbLogic\data\result\gold\a.txt', 'r', encoding='utf-8') as f:
         a_content = f.read()
 
-    with open(r'Y:\Project\PythonProject\VerbLogic\data\extract\gold\c.txt', 'r', encoding='utf-8') as f:
+    with open(r'Y:\Project\Python\VerbLogic\data\result\gold\c.txt', 'r', encoding='utf-8') as f:
         c_content = f.read()
 
     result = count_attribute_categories(a_content, c_content)
     total = {}
     for k, v in result.items():
-        # print(f'\n{k}: ')
-        # sum_v = 0
-        # for vk, vv in v.items():
-        #     sum_v += vv
-        # for vk, vv in v.items():
-        #     v[vk] = vv / sum_v * 100
-        # for vk, vv in sorted(v.items(), key=lambda v: v[1], reverse=True):
-        #     print(f"{vk},{vv:.2f}  ", end='')
+        print(f'\n{k}: ')
+        sum_v = 0
+        for vk, vv in v.items():
+            sum_v += vv
+        for vk, vv in v.items():
+            v[vk] = vv / sum_v * 100
+        for vk, vv in sorted(v.items(), key=lambda v: v[1], reverse=True):
+            print(f"{vk},{vv:.2f}%  ", end='')
         for vk, vv in v.items():
             total[vk] = total.get(vk, 0) + vv
+
+    print("\n\n\n总：")
     for k, v in sorted(total.items(), key=lambda t: t[1], reverse=True):
-        print(f"{k}, {v / sum(total.values()) * 100:.2f}")
+        print(f"{k}, {v}次, 占比{v / sum(total.values()) * 100:.2f}%")
 
 
-def verb_cate_move():
+def verb_cate_move(markov=True):
     v_c_set = set()
-    verb_dict = verb_sys(r"Y:\Project\PythonProject\VerbLogic\data\analysis\verb_lulu.txt")
-    with open(r'Y:\Project\PythonProject\VerbLogic\data\result\gold\c.txt', 'r', encoding='utf-8') as f:
+    verb_dict = verb_sys(r"Y:\Project\Python\VerbLogic\data\analysis\verb_lulu.txt")
+    with open(r'Y:\Project\Python\VerbLogic\data\result\gold\c.txt', 'r', encoding='utf-8') as f:
         c_content = f.read()
     for v in verb_dict.keys():
         c_content = c_content.replace(v, verb_dict[v])
@@ -274,7 +241,6 @@ def verb_cate_move():
                 v_c_set.add((v, c))
 
     v_c_list = list(v_c_set)
-    # v_c_num = len(v_c_list)
     v_c_dict = {(v, c): 0 for v, c in v_c_list}
     v2v_matrix = np.zeros((len(v_c_list), len(v_c_list)))
     for v2c in c_content.values():
@@ -288,22 +254,38 @@ def verb_cate_move():
         for i in range(len(v_list) - 1):
             v_c_1 = (v_list[i], c_list[i])
             v_c_2 = (v_list[i + 1], c_list[i + 1])
-            if v_list[i] == '探索' and v_list[i + 1] == '建议':
-                print(list(c_content.values()).index(v2c) + 1)
             if v_c_1 in v_c_list and v_c_2 in v_c_list:
                 v2v_matrix[v_c_list.index(v_c_1), v_c_list.index(v_c_2)] += 1
 
-        for i in range(len(v_list)):
+        for i in range(len(v_list) - 1):
             vc = (v_list[i], c_list[i])
             v_c_dict[vc] += 1
 
+    df = pd.DataFrame(v2v_matrix, index=v_c_list, columns=v_c_list)
+    df.to_excel(r"Y:\Project\Python\VerbLogic\data\excel\动词类别转移频次.xlsx", index=True)
+
     v2v_p_matrix = np.zeros((len(v_c_list), len(v_c_list)))
     for i in range(len(v_c_list)):
-        for j in range(len(v_c_list)):
-            v2v_p_matrix[i, j] = v2v_matrix[i, j] / v_c_dict[v_c_list[i]]
+        row_sum = np.sum(v2v_matrix[i, :])
+        if row_sum > 0:
+            # 正常情况：有出边转移，按频次计算概率
+            for j in range(len(v_c_list)):
+                v2v_p_matrix[i, j] = v2v_matrix[i, j] / row_sum
+        elif markov:
+            # 特殊情况：该节点没有出边转移（只被其他节点转移过来）
+            # 设置自转移概率为1，符合马尔可夫转移概率矩阵要求
+            v2v_p_matrix[i, i] = 1.0
 
     df = pd.DataFrame(v2v_p_matrix, index=v_c_list, columns=v_c_list)
-    df.to_excel(r"Y:\Project\PythonProject\VerbLogic\data\excel\动词类别转移概率.xlsx", index=True)
+    df.to_excel(r"Y:\Project\Python\VerbLogic\data\excel\动词类别转移概率_非马尔可夫.xlsx", index=True)
+    
+    # 将v_c_dict转换为三列表格：动词、类别、频次
+    v_c_data = []
+    for vc, count in v_c_dict.items():
+        v_c_data.append({'动词阶段': vc, '频次': count})
+    df_vc = pd.DataFrame(v_c_data)
+    df_vc = df_vc.sort_values(by='频次', ascending=False)
+    df_vc.to_excel(r"Y:\Project\Python\VerbLogic\data\excel\动词类别频次.xlsx", index=False)
 
     # pre_c, next_c = '资源获取类', '知识重构类'
     # move_num = {}
@@ -320,4 +302,4 @@ def verb_cate_move():
 
 
 if __name__ == '__main__':
-    verb_cate_move()
+    verb_cate_move(False)

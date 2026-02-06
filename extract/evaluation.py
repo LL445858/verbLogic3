@@ -5,14 +5,13 @@
 # @File    : evaluation.py
 # @Software: PyCharm
 
-import re
 import json
-import jieba
 import random
-import matplotlib
-
+import re
 from collections import Counter, defaultdict
 
+import jieba
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -26,9 +25,9 @@ plt.rcParams['axes.unicode_minus'] = False  # 正常显示负号
 
 
 def category_score(model_name):
-    with open(r"Y:\Project\PythonProject\VerbLogic\data\result\category\gold.txt", "r", encoding="utf-8") as f:
+    with open(r"Y:\Project\Python\VerbLogic\data\result\gold\c.txt", "r", encoding="utf-8") as f:
         content1 = f.read()
-    with open(f"Y:\\Project\\PythonProject\\VerbLogic\\data\\result\\category\\{model_name}.txt",
+    with open(f"Y:\\Project\\Python\\VerbLogic\\data\\result\\category\\{model_name}.txt",
               encoding='utf-8') as f:
         content2 = f.read()
 
@@ -111,9 +110,9 @@ def verb_score(model_name):
     precision_score = []
     recall_score = []
     f1_score = []
-    with open(r"Y:\Project\PythonProject\VerbLogic\data\result\verbs\gold.txt", encoding='utf-8') as f:
+    with open(r"Y:\Project\Python\VerbLogic\data\result\gold\v.txt", encoding='utf-8') as f:
         json_a = json.load(f)
-    with open(f"Y:\\Project\\PythonProject\\VerbLogic\\data\\result\\verbs\\{model_name}.txt", encoding='utf-8') as f:
+    with open(f"Y:\\Project\\Python\\VerbLogic\\data\\result\\verbs\\{model_name}.txt", encoding='utf-8') as f:
         json_b = json.load(f)
     for i in range(1, 35):
         v_a = json_a[f"data{i}"]
@@ -167,10 +166,9 @@ def attr_score(model):
             parsed_data[data_id] = numbered_verbs
         return parsed_data
 
-    data_a = parse_custom_json(r'Y:\Project\Python\VerbLogic\data\extract\attr\gold.txt')
-    data_b = parse_custom_json(f'Y:\\Project\\Python\\VerbLogic\\data\\extract\\attr\\{model}.txt')
+    data_a = parse_custom_json(r'Y:\Project\Python\VerbLogic\data\result\gold\a.txt')
+    data_b = parse_custom_json(f'Y:\\Project\\Python\\VerbLogic\\data\\result\\attribute\\{model}.txt')
 
-    kappa_results = []
     precision_results = []
     recall_results = []
     f1_results = []
@@ -185,29 +183,6 @@ def attr_score(model):
         verbs_a = data_a.get(text_id, {})
         verbs_b = data_b.get(text_id, {})
 
-        # 一致性
-        # all_verbs = set(verbs_a.keys()).union(verbs_b.keys())
-        # attr_a_list = []
-        # attr_b_list = []
-        # for verb in all_verbs:
-        #     attrs_a = verbs_a.get(verb, {})
-        #     attrs_b = verbs_b.get(verb, {})
-        #     all_attrs = set(attrs_a.keys()).union(attrs_b.keys())
-        #
-        #     for attr in all_attrs:
-        #         val_a = attrs_a.get(attr, "")
-        #         val_b = attrs_b.get(attr, "")
-        #         # if is_value_match(val_a, val_b):
-        #         if val_a == val_b:
-        #             num = random.randint(1, 10)
-        #             attr_a_list.append(num)
-        #             attr_b_list.append(num)
-        #         else:
-        #             attr_a_list.append(1)
-        #             attr_b_list.append(-1)
-        #
-        # kappa_results.append((text_id, cohen_kappa_score(attr_a_list, attr_b_list)))
-
         # P/R/F1
         true_items = {(verb, attr, val) for verb, attr_dict in verbs_a.items() for attr, val in attr_dict.items()}
         pred_items = {(verb, attr, val) for verb, attr_dict in verbs_b.items() for attr, val in attr_dict.items()}
@@ -217,8 +192,6 @@ def attr_score(model):
         for t in true_items:
             for p in pred_items:
                 if p not in used_preds and (t[0] == p[0]) and (t[1] == p[1]):
-                    # if p not in used_preds and (t[0] == p[0]) and (t[1] == p[1]) and t[2] == p[2]:
-                    # if p not in used_preds and (t[0] == p[0]) and (t[1] == p[1]) and is_value_match(t[2], p[2]):
                     tp += 1
                     used_preds.add(p)
                     break
@@ -233,7 +206,6 @@ def attr_score(model):
         recall_results.append((text_id, recall))
         f1_results.append((text_id, f1))
 
-        # blue
         for verb in sorted(set(verbs_a.keys()).union(verbs_b.keys())):
             ref_attrs = verbs_a.get(verb, {})
             hyp_attrs = verbs_b.get(verb, {})
@@ -262,19 +234,15 @@ def attr_score(model):
                     rouge_scores[8].append(2*rouge_scores[6][-1]*rouge_scores[7][-1]/(rouge_scores[6][-1]+rouge_scores[7][-1])
                                            if rouge_scores[7][-1] + rouge_scores[6][-1] != 0 else 0)
 
-                    if rouge_scores[8][-1] <= rouge_scores[7][-1] and rouge_scores[8][-1] <= rouge_scores[6][-1]:
-                        print(ref_val, hyp_val, rouge_result['rouge-l'])
-
-    # print(f'一致性：{np.average([k[1] for k in kappa_results]) * 100: .2f} % , r:{rouge_scores}
     print(f'\n{model}:')
     print(
         f'P值：{np.average([p[1] for p in precision_results]) * 100:.2f}%  R值：{np.average([r[1] for r in recall_results]) * 100:.2f}% F1值：{np.average([f[1] for f in f1_results]) * 100:.2f}%')
-    # print(f'bleu-1 : {np.average(bleu_scores_1) * 100:.2f}%\nbleu-2 : {np.average(bleu_scores_2) * 100:.2f}%')
-    # print(R_results)
-    # print(
-    #     f'rouge-1: P:{np.average(rouge_scores[1]) * 100:.2f}%\tR:{np.average(rouge_scores[0]) * 100:.2f}%\tF1:{np.average(rouge_scores[2]) * 100:.2f}%')
-    # print(
-    #     f'rouge-2: P:{np.average(rouge_scores[4]) * 100:.2f}%\tR:{np.average(rouge_scores[3]) * 100:.2f}%\tF1:{np.average(rouge_scores[5]) * 100:.2f}%')
+    print(f'bleu-1 : {np.average(bleu_scores_1) * 100:.2f}%\nbleu-2 : {np.average(bleu_scores_2) * 100:.2f}%')
+    print("R_results")
+    print(
+        f'rouge-1: P:{np.average(rouge_scores[1]) * 100:.2f}%\tR:{np.average(rouge_scores[0]) * 100:.2f}%\tF1:{np.average(rouge_scores[2]) * 100:.2f}%')
+    print(
+        f'rouge-2: P:{np.average(rouge_scores[4]) * 100:.2f}%\tR:{np.average(rouge_scores[3]) * 100:.2f}%\tF1:{np.average(rouge_scores[5]) * 100:.2f}%')
     print(
         f'rouge-l: P:{np.average(rouge_scores[7]) * 100:.2f}%\tR:{np.average(rouge_scores[6]) * 100:.2f}%\tF:{np.average(rouge_scores[8]) * 100:.2f}%\n')
 

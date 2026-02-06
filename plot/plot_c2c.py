@@ -14,7 +14,7 @@ mpl.use('TkAgg')
 plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
 plt.rcParams['axes.unicode_minus'] = False
 
-data1 = pd.read_csv(r"Y:\Project\PythonProject\VerbLogic\data\excel\阶段转移概率_和弦.csv")
+data1 = pd.read_csv(r"Y:\Project\Python\VerbLogic\data\excel\阶段转移概率_和弦.csv")
 data2 = data1.to_numpy()
 
 
@@ -38,7 +38,7 @@ chord_diagram(data2,
               rotate_names=[True, True, True, True, True, True, True],
               )
 
-plt.savefig('test_1' + '.png',
+plt.savefig('阶段转移概率_和弦' + '.png',
             dpi=500,
             bbox_inches='tight'
             )

@@ -6,12 +6,15 @@
 # @Software: PyCharm
 
 from openai import OpenAI
+import toml
+api_config = toml.load("ApiConfig.toml")
+
 
 
 def baichuan4(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://api.baichuan-ai.com/v1/",
+        api_key=api_config["BaichuanKey"],
+        base_url=api_config["BaichuanUrl"],
     )
 
     completion = client.chat.completions.create(
@@ -27,14 +30,13 @@ def baichuan4(system_content, user_content):
     content = ""
     for chunk in completion:
         content += chunk.choices[0].delta.content
-        # print(chunk.choices[0].delta)
     return content
 
 
 def baichuan3(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://api.baichuan-ai.com/v1/",
+        api_key=api_config["BaichuanKey"],
+        base_url=api_config["BaichuanUrl"],
     )
 
     completion = client.chat.completions.create(
@@ -50,14 +52,13 @@ def baichuan3(system_content, user_content):
     content = ""
     for chunk in completion:
         content += chunk.choices[0].delta.content
-        # print(chunk.choices[0].delta)
     return content
 
 
 def chatglm4(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://open.bigmodel.cn/api/paas/v4/"
+        api_key=api_config["ChatGLMKey"],
+        base_url=api_config["ChatGLMUrl"],
     )
 
     completion = client.chat.completions.create(
@@ -71,8 +72,6 @@ def chatglm4(system_content, user_content):
         max_tokens=8192
     )
 
-    # print(completion.choices[0].message)
-
     content = ""
     for chunk in completion:
         delta = chunk.choices[0].delta
@@ -84,8 +83,8 @@ def chatglm4(system_content, user_content):
 
 def chatglmz1(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://open.bigmodel.cn/api/paas/v4/"
+        api_key=api_config["ChatGLMZ1Key"],
+        base_url=api_config["ChatGLMZ1Url"],
     )
 
     completion = client.chat.completions.create(
@@ -99,8 +98,6 @@ def chatglmz1(system_content, user_content):
         max_tokens=8192
     )
 
-    # print(completion.choices[0].message)
-
     content = ""
     for chunk in completion:
         delta = chunk.choices[0].delta
@@ -112,9 +109,8 @@ def chatglmz1(system_content, user_content):
 
 def doubao_16(system_content, user_content):
     client = OpenAI(
-        # 从环境变量中读取您的方舟API Key
-        api_key="YOU_API_KEY",
-        base_url="https://ark.cn-beijing.volces.com/api/v3",
+        api_key=api_config["DoubaoKey"],
+        base_url=api_config["DoubaoUrl"],
     )
     response = client.chat.completions.create(
         model="doubao-seed-1.6-thinking-250615",
@@ -122,29 +118,25 @@ def doubao_16(system_content, user_content):
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content},
         ],
-        # thinking = 'enable',
         max_tokens=8192,
         temperature=0.8,
         stream=True,
-        # response_format={'type': 'json_object'}
     )
     reasoning_content = ""
     content = ""
     for chunk in response:
         if hasattr(chunk.choices[0].delta, 'reasoning_content') and chunk.choices[0].delta.reasoning_content:
             reasoning_content += chunk.choices[0].delta.reasoning_content
-            # print(chunk.choices[0].delta.reasoning_content, end="")
         else:
             if chunk.choices[0].delta.content:
                 content += chunk.choices[0].delta.content
-                # print(chunk.choices[0].delta.content, end="")
     return content
 
 
 def doubao_15(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://ark.cn-beijing.volces.com/api/v3",
+        api_key=api_config["DoubaoKey"],
+        base_url=api_config["DoubaoUrl"],
     )
     response = client.chat.completions.create(
         model="doubao-1.5-thinking-pro-250415",
@@ -152,29 +144,25 @@ def doubao_15(system_content, user_content):
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content},
         ],
-        # thinking = 'enable',
         max_tokens=8192,
         temperature=0.8,
         stream=True,
-        # response_format={'type': 'json_object'}
     )
     reasoning_content = ""
     content = ""
     for chunk in response:
         if hasattr(chunk.choices[0].delta, 'reasoning_content') and chunk.choices[0].delta.reasoning_content:
             reasoning_content += chunk.choices[0].delta.reasoning_content
-            # print(chunk.choices[0].delta.reasoning_content, end="")
         else:
             if chunk.choices[0].delta.content:
                 content += chunk.choices[0].delta.content
-                # print(chunk.choices[0].delta.content, end="")
     return content
 
 
 def deepseek_r1(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://api.deepseek.com"
+        api_key=api_config["DeepseekKey"],
+        base_url=api_config["DeepseekUrl"],
     )
 
     response = client.chat.completions.create(
@@ -201,8 +189,8 @@ def deepseek_r1(system_content, user_content):
 
 def deepseek_v3(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://api.deepseek.com"
+        api_key=api_config["DeepseekKey"],
+        base_url=api_config["DeepseekUrl"],
     )
 
     response = client.chat.completions.create(
@@ -211,7 +199,6 @@ def deepseek_v3(system_content, user_content):
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content},
         ],
-        # stream=True,
         max_tokens=8192,
         temperature=0.8,
     )
@@ -221,8 +208,8 @@ def deepseek_v3(system_content, user_content):
 
 def qwen_plus(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        api_key=api_config["QwenKey"],
+        base_url=api_config["QwenUrl"],
     )
 
     completion = client.chat.completions.create(
@@ -237,31 +224,17 @@ def qwen_plus(system_content, user_content):
         temperature=0.8
     )
 
-    reasoning_content = ""  # 完整思考过程
-    answer_content = ""  # 完整回复
-    is_answering = False  # 是否进入回复阶段
-    # print("\n" + "=" * 20 + "思考过程" + "=" * 20 + "\n")
+
+    answer_content = ""
+    is_answering = False
 
     for chunk in completion:
         if not chunk.choices:
-            # print("\nUsage:")
-            # print(chunk.usage)
             continue
-
         delta = chunk.choices[0].delta
-
-        # 只收集思考内容
-        # if hasattr(delta, "reasoning_content") and delta.reasoning_content is not None:
-        #     if not is_answering:
-        #         print(delta.reasoning_content, end="", flush=True)
-        #     reasoning_content += delta.reasoning_content
-
-        # 收到content，开始进行回复
         if hasattr(delta, "content") and delta.content:
             if not is_answering:
-                # print("\n" + "=" * 20 + "完整回复" + "=" * 20 + "\n")
                 is_answering = True
-            # print(delta.content, end="", flush=True)
             answer_content += delta.content
 
     return answer_content
@@ -269,8 +242,8 @@ def qwen_plus(system_content, user_content):
 
 def qwen3(system_content, user_content):
     client = OpenAI(
-        api_key="YOU_API_KEY",
-        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        api_key=api_config["QwenKey"],
+        base_url=api_config["QwenUrl"],
     )
 
     completion = client.chat.completions.create(
@@ -285,31 +258,18 @@ def qwen3(system_content, user_content):
         temperature=0.8
     )
 
-    reasoning_content = ""  # 完整思考过程
-    answer_content = ""  # 完整回复
-    is_answering = False  # 是否进入回复阶段
-    # print("\n" + "=" * 20 + "思考过程" + "=" * 20 + "\n")
+    answer_content = ""
+    is_answering = False
+
 
     for chunk in completion:
         if not chunk.choices:
-            # print("\nUsage:")
-            # print(chunk.usage)
             continue
 
         delta = chunk.choices[0].delta
-
-        # 只收集思考内容
-        # if hasattr(delta, "reasoning_content") and delta.reasoning_content is not None:
-        #     if not is_answering:
-        #         print(delta.reasoning_content, end="", flush=True)
-        #     reasoning_content += delta.reasoning_content
-
-        # 收到content，开始进行回复
         if hasattr(delta, "content") and delta.content:
             if not is_answering:
-                # print("\n" + "=" * 20 + "完整回复" + "=" * 20 + "\n")
                 is_answering = True
-            # print(delta.content, end="", flush=True)
             answer_content += delta.content
 
     return answer_content

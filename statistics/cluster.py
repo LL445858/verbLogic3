@@ -74,6 +74,7 @@ def kmeans():
         scaled_data = scaler.fit_transform(distance_matrix)
         best_score = -1
         silhouette_scores = []
+        best_k = 1
 
         K_range = range(2, 10)
         for k in K_range:
@@ -86,6 +87,7 @@ def kmeans():
                 best_score = score
                 best_k = k
 
+        print(f"最佳 K 值: {best_k}")
         plt.figure(figsize=(8, 4))
         plt.plot(K_range, silhouette_scores, marker="o", linestyle="--")
         plt.xlabel("聚类数 K")

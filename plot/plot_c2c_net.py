@@ -15,7 +15,7 @@ matplotlib.use('TkAgg')
 
 
 def create_graph():
-    df = pd.read_excel(r"Y:\Project\PythonProject\VerbLogic\data\excel\阶段转移概率.xlsx", sheet_name='Sheet1',
+    df = pd.read_excel(r"Y:\Project\Python\VerbLogic\data\excel\阶段转移概率.xlsx", sheet_name='Sheet1',
                        index_col=0)
     G = nx.DiGraph()
     words = {'知识规划类': 72, '知识整合类': 37, '资源获取类': 48, '知识协作类': 83, "知识重构类": 318,
@@ -39,7 +39,7 @@ def create_graph():
 
 def visualize_paper_ready_network():
     G = create_graph()
-    output_filename = r"Y:\Project\PythonProject\VerbLogic\data\figure\类别转移.svg"
+    output_filename = r"Y:\Project\Python\VerbLogic\data\figure\类别转移.svg"
     font_path = 'C:/Windows/Fonts/msyh.ttc'
     prop = fm.FontProperties(fname=font_path)
     plt.rcParams['font.family'] = prop.get_name()
