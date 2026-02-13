@@ -5,10 +5,16 @@
 # @File    : api.py
 # @Software: PyCharm
 
-from openai import OpenAI
 import toml
-api_config = toml.load("ApiConfig.toml")
+from openai import OpenAI
+from volcenginesdkarkruntime import Ark
+from zai import ZhipuAiClient
+from dashscope import Generation
+import dashscope
 
+api_config = toml.load("ApiConfig.toml")
+temperature = 0.6
+max_tokens = 4096
 
 
 def baichuan4(system_content, user_content):
@@ -23,7 +29,8 @@ def baichuan4(system_content, user_content):
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content}
         ],
-        temperature=0.3,
+        temperature=temperature,
+        max_tokens=max_tokens,
         stream=True,
     )
 
@@ -45,7 +52,8 @@ def baichuan3(system_content, user_content):
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content}
         ],
-        temperature=0.3,
+        temperature=temperature,
+        max_tokens=max_tokens,
         stream=True,
     )
 
@@ -55,221 +63,213 @@ def baichuan3(system_content, user_content):
     return content
 
 
-def chatglm4(system_content, user_content):
-    client = OpenAI(
-        api_key=api_config["ChatGLMKey"],
-        base_url=api_config["ChatGLMUrl"],
-    )
+def chatglm_47(system_content, user_content):
+    client = ZhipuAiClient(api_key=api_config["ChatGLMKey"])
 
-    completion = client.chat.completions.create(
-        model="glm-4-plus",
+    response = client.chat.completions.create(
+        model="glm-4.7",
         messages=[
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content}
         ],
-        temperature=0.9,
-        stream=True,
-        max_tokens=8192
-    )
-
-    content = ""
-    for chunk in completion:
-        delta = chunk.choices[0].delta
-        if delta.content:
-            content += delta.content
-
-    return content
-
-
-def chatglmz1(system_content, user_content):
-    client = OpenAI(
-        api_key=api_config["ChatGLMZ1Key"],
-        base_url=api_config["ChatGLMZ1Url"],
-    )
-
-    completion = client.chat.completions.create(
-        model="glm-z1-air",
-        messages=[
-            {"role": "system", "content": system_content},
-            {"role": "user", "content": user_content}
-        ],
-        temperature=0.9,
-        stream=True,
-        max_tokens=8192
-    )
-
-    content = ""
-    for chunk in completion:
-        delta = chunk.choices[0].delta
-        if delta.content:
-            content += delta.content
-
-    return content
-
-
-def doubao_16(system_content, user_content):
-    client = OpenAI(
-        api_key=api_config["DoubaoKey"],
-        base_url=api_config["DoubaoUrl"],
-    )
-    response = client.chat.completions.create(
-        model="doubao-seed-1.6-thinking-250615",
-        messages=[
-            {"role": "system", "content": system_content},
-            {"role": "user", "content": user_content},
-        ],
-        max_tokens=8192,
-        temperature=0.8,
-        stream=True,
-    )
-    reasoning_content = ""
-    content = ""
-    for chunk in response:
-        if hasattr(chunk.choices[0].delta, 'reasoning_content') and chunk.choices[0].delta.reasoning_content:
-            reasoning_content += chunk.choices[0].delta.reasoning_content
-        else:
-            if chunk.choices[0].delta.content:
-                content += chunk.choices[0].delta.content
-    return content
-
-
-def doubao_15(system_content, user_content):
-    client = OpenAI(
-        api_key=api_config["DoubaoKey"],
-        base_url=api_config["DoubaoUrl"],
-    )
-    response = client.chat.completions.create(
-        model="doubao-1.5-thinking-pro-250415",
-        messages=[
-            {"role": "system", "content": system_content},
-            {"role": "user", "content": user_content},
-        ],
-        max_tokens=8192,
-        temperature=0.8,
-        stream=True,
-    )
-    reasoning_content = ""
-    content = ""
-    for chunk in response:
-        if hasattr(chunk.choices[0].delta, 'reasoning_content') and chunk.choices[0].delta.reasoning_content:
-            reasoning_content += chunk.choices[0].delta.reasoning_content
-        else:
-            if chunk.choices[0].delta.content:
-                content += chunk.choices[0].delta.content
-    return content
-
-
-def deepseek_r1(system_content, user_content):
-    client = OpenAI(
-        api_key=api_config["DeepseekKey"],
-        base_url=api_config["DeepseekUrl"],
-    )
-
-    response = client.chat.completions.create(
-        model="deepseek-reasoner",
-        messages=[
-            {"role": "system", "content": system_content},
-            {"role": "user", "content": user_content},
-        ],
-        stream=True,
-        max_tokens=8192,
-        temperature=0.8,
-    )
-    reasoning_content = ""
-    content = ""
-
-    for chunk in response:
-        if chunk.choices[0].delta.reasoning_content:
-            reasoning_content += chunk.choices[0].delta.reasoning_content
-        else:
-            if chunk.choices[0].delta.content:
-                content += chunk.choices[0].delta.content
-    return content
-
-
-def deepseek_v3(system_content, user_content):
-    client = OpenAI(
-        api_key=api_config["DeepseekKey"],
-        base_url=api_config["DeepseekUrl"],
-    )
-
-    response = client.chat.completions.create(
-        model="deepseek-chat",
-        messages=[
-            {"role": "system", "content": system_content},
-            {"role": "user", "content": user_content},
-        ],
-        max_tokens=8192,
-        temperature=0.8,
+        thinking={
+            "type": "enabled",
+        },
+        max_tokens=max_tokens,
+        temperature=temperature,
+        response_format={"type": "json_object"}
     )
 
     return response.choices[0].message.content
 
 
-def qwen_plus(system_content, user_content):
-    client = OpenAI(
-        api_key=api_config["QwenKey"],
-        base_url=api_config["QwenUrl"],
-    )
+def chatglm_47_flash(system_content, user_content):
+    client = ZhipuAiClient(api_key=api_config["ChatGLMKey"])
 
-    completion = client.chat.completions.create(
-        model="qwen-plus-latest",
+    response = client.chat.completions.create(
+        model="glm-4.7-flash",
         messages=[
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content}
         ],
-        extra_body={"enable_thinking": True},
-        stream=True,
-        max_tokens=8192,
-        temperature=0.8
+        thinking={
+            "type": "enabled",
+        },
+        max_tokens=max_tokens,
+        temperature=temperature,
+        response_format={"type": "json_object"}
     )
 
+    return response.choices[0].message.content
 
-    answer_content = ""
-    is_answering = False
 
-    for chunk in completion:
-        if not chunk.choices:
-            continue
-        delta = chunk.choices[0].delta
-        if hasattr(delta, "content") and delta.content:
-            if not is_answering:
-                is_answering = True
-            answer_content += delta.content
+def doubao_16(system_content, user_content):
+    client = Ark(
+        api_key=api_config["DoubaoKey"],
+    )
 
-    return answer_content
+    completion = client.chat.completions.create(
+        model="doubao-seed-1-6-251015",
+        messages=[
+            {"role": "system", "content": system_content},
+            {"role": "user", "content": user_content},
+        ],
+        max_tokens=max_tokens,
+        temperature=temperature,
+        thinking={"type": "enabled"},
+        response_format={"type": "json_object"}
+    )
+    return completion.choices[0].message.content
+
+
+
+def doubao_18(system_content, user_content):
+    client = Ark(
+        api_key=api_config["DoubaoKey"],
+    )
+
+    completion = client.chat.completions.create(
+        model="doubao-seed-1-8-251228",
+        messages=[
+            {"role": "system", "content": system_content},
+            {"role": "user", "content": user_content},
+        ],
+        thinking={"type": "enabled"},
+        max_tokens=max_tokens,
+        temperature=temperature,
+        response_format={"type": "json_object"}
+    )
+    return completion.choices[0].message.content
+
+
+def deepseek_r1(system_content, user_content):
+    client = Ark(
+        api_key=api_config["DoubaoKey"],
+    )
+
+    completion = client.chat.completions.create(
+        model="deepseek-r1-250528",
+        messages=[
+            {"role": "system", "content": system_content},
+            {"role": "user", "content": user_content},
+        ],
+        thinking={"type": "enabled"},
+        max_tokens=max_tokens,
+        temperature=temperature,
+        response_format={"type": "json_object"}
+    )
+    return completion.choices[0].message.content
+
+
+def deepseek_v32(system_content, user_content):
+    client = Ark(
+        api_key=api_config["DoubaoKey"],
+    )
+
+    completion = client.chat.completions.create(
+        model="deepseek-v3-2-251201",
+        messages=[
+            {"role": "system", "content": system_content},
+            {"role": "user", "content": user_content},
+        ],
+        thinking={"type": "enabled"},
+        max_tokens=max_tokens,
+        temperature=temperature,
+        response_format={"type": "json_object"}
+    )
+    return completion.choices[0].message.content
+
+
+# def deepseek_r1(system_content, user_content):
+#     client = OpenAI(
+#         api_key=api_config["DeepseekKey"],
+#         base_url=api_config["DeepseekUrl"],
+#     )
+#
+#     response = client.chat.completions.create(
+#         model="deepseek-reasoner",
+#         messages=[
+#             {"role": "system", "content": system_content},
+#             {"role": "user", "content": user_content},
+#         ],
+#         stream=True,
+#         max_tokens=max_tokens,
+#         temperature=temperature,
+#     )
+#     reasoning_content = ""
+#     content = ""
+#
+#     for chunk in response:
+#         if chunk.choices[0].delta.reasoning_content:
+#             reasoning_content += chunk.choices[0].delta.reasoning_content
+#         else:
+#             if chunk.choices[0].delta.content:
+#                 content += chunk.choices[0].delta.content
+#     return content
+#
+#
+# def deepseek_v32(system_content, user_content):
+#     client = OpenAI(
+#         api_key=api_config["DeepseekKey"],
+#         base_url=api_config["DeepseekUrl"],
+#     )
+#
+#     response = client.chat.completions.create(
+#         model="deepseek-chat",
+#         messages=[
+#             {"role": "system", "content": system_content},
+#             {"role": "user", "content": user_content},
+#         ],
+#         max_tokens=max_tokens,
+#         temperature=temperature,
+#     )
+#
+#     return response.choices[0].message.content
+
+
+def qwen_plus(system_content, user_content):
+    response = Generation.call(
+        api_key=api_config["QwenKey"],
+        model="qwen-plus-2025-12-01",
+        messages=[
+            {"role": "system", "content": system_content},
+            {"role": "user", "content": user_content}
+        ],
+        max_tokens=max_tokens,
+        temperature=temperature,
+        enable_thinking=True,
+        result_format="message",
+        # response_format={"type": "json_object"}
+    )
+
+    if response.status_code == 200:
+        return response.output.choices[0].message.content
+    else:
+        return f"{response.status_code}; {response.code}; {response.message}"
+
 
 
 def qwen3(system_content, user_content):
-    client = OpenAI(
+    response = Generation.call(
         api_key=api_config["QwenKey"],
-        base_url=api_config["QwenUrl"],
-    )
-
-    completion = client.chat.completions.create(
-        model="qwen3-235b-a22b",
+        model="qwen3-max-2026-01-23",
         messages=[
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content}
         ],
-        extra_body={"enable_thinking": True},
-        stream=True,
-        max_tokens=8192,
-        temperature=0.8
+        max_tokens=max_tokens,
+        temperature=temperature,
+        enable_thinking=True,
+        result_format="message",
+        # response_format={"type": "json_object"}
     )
 
-    answer_content = ""
-    is_answering = False
+    if response.status_code == 200:
+        return response.output.choices[0].message.content
+    else:
+        return f"{response.status_code}; {response.code}; {response.message}"
 
 
-    for chunk in completion:
-        if not chunk.choices:
-            continue
-
-        delta = chunk.choices[0].delta
-        if hasattr(delta, "content") and delta.content:
-            if not is_answering:
-                is_answering = True
-            answer_content += delta.content
-
-    return answer_content
+if __name__ == "__main__":
+    result = qwen_plus("你是问答助手", "1+1等于几")
+    print(result)

@@ -1,11 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0c1fe864-7a60-4005-82b3-b79fb9c50f6c" name="更改" comment="" />
+    <list default="true" id="0c1fe864-7a60-4005-82b3-b79fb9c50f6c" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/VerbLogic.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/VerbLogic.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data10.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data11.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data12.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data13.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data17.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data18.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data19.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data20.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data21.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data22.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data23.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data24.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data25.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data26.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data27.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data28.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data29.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data30.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data31.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data32.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data33.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data34.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data35.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data36.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data37.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data38.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data39.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data40.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data41.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data6.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data7.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data8.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/corpus/data9.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/executor_verb_frequencies_by_stage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/executor_verb_types_by_stage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/top10_executor_verbs_all_stages.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/top10_成果发布类.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/top10_成果影响类.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/top10_知识协作类.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/top10_知识整合类.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/top10_知识规划类.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/top10_知识重构类.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/figure/top10_资源获取类.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/baichuan3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/baichuan4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/deepseek_r1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/deepseek_v3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/doubao_15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/doubao_16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/glm4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/glmz.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/gold.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/lu.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/qwen3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/qwen_plus.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/attribute/xiang.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/baichuan3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/baichuan4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/deepseek_r1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/deepseek_v3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/doubao_15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/doubao_16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/glm4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/glmz.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/gold.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/lu.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/qwen3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/qwen_plus.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/category/xiang.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/gold/a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/result/gold/a.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/gold/c.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/result/gold/c.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/gold/v.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/result/gold/v.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/baichuan3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/baichuan4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/bu.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/deepseek_r1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/deepseek_v3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/doubao_15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/doubao_16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/glm4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/glmz.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/gold.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/lu.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/qwen3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/qwen_plus.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/result/verbs/xiang.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/extract/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/extract/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extract/evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/extract/evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extract/llm.py" beforeDir="false" afterPath="$PROJECT_DIR$/extract/llm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/cluster.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/count.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/executor.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/executor_lift.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/limitResource.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/mainPath.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/mainPathWithPageRank.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/markovChain.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/non-negativeMatrixFactorization.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics/pagerank.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -16,20 +144,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.count.executor&quot;: &quot;Run&quot;,
-    &quot;Python.evaluation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.plot_c2c.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.api.executor": "Run",
+    "Python.count.executor": "Run",
+    "Python.evaluation.executor": "Run",
+    "Python.llm.executor": "Run",
+    "Python.plot_all_v2.executor": "Run",
+    "Python.plot_c2c.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "git-widget-placeholder": "main",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-f2b7a9f6281b-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.142" />
+        <option value="bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173" />
       </set>
     </attachedChunks>
   </component>
@@ -42,12 +175,20 @@
       <updated>1766125894605</updated>
       <workItem from="1766125895742" duration="2500000" />
       <workItem from="1766128454839" duration="653000" />
+      <workItem from="1770727151879" duration="137000" />
+      <workItem from="1770727356315" duration="407000" />
+      <workItem from="1770728103407" duration="7758000" />
+      <workItem from="1770861620425" duration="10185000" />
+      <workItem from="1770881090983" duration="9214000" />
     </task>
     <servers />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/VerbLogic$llm.coverage" NAME="llm 覆盖结果" MODIFIED="1770887460468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/extract" />
     <SUITE FILE_PATH="coverage/VerbLogic$plot_c2c.coverage" NAME="plot_c2c 覆盖结果" MODIFIED="1766127318036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plot" />
-    <SUITE FILE_PATH="coverage/VerbLogic$evaluation.coverage" NAME="evaluation 覆盖结果" MODIFIED="1766126647044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/extract" />
+    <SUITE FILE_PATH="coverage/VerbLogic$api.coverage" NAME="api 覆盖结果" MODIFIED="1770867922085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/extract" />
+    <SUITE FILE_PATH="coverage/VerbLogic$evaluation.coverage" NAME="evaluation 覆盖结果" MODIFIED="1770888104159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/extract" />
     <SUITE FILE_PATH="coverage/VerbLogic$count.coverage" NAME="count 覆盖结果" MODIFIED="1766128201843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statistics" />
+    <SUITE FILE_PATH="coverage/VerbLogic$plot_all_v2.coverage" NAME="plot_all_v2 覆盖结果" MODIFIED="1770890172018" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plot" />
   </component>
 </project>
